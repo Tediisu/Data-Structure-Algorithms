@@ -7,7 +7,7 @@
 
 🗂️ Structures to Define
 `c
-typeded struct {
+typedef struct {
     int hours;
     int minutes;
 } Time;
