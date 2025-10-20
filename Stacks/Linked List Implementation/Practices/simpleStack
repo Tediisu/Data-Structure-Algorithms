@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node, *NodePtr, *Stack;
+
+void initStack(Stack *S);
+bool push(Stack *S, int data);
+bool pop(Stack *S);
+int peek(Stack S);
+bool isEmpty(Stack S);
+void display(Stack S);
+void visualize(Stack S);
+
+
+int main(void)
+{
+    Stack myStack;
+
+    initStack(&myStack);
+    push(&myStack, 1);
+    push(&myStack, 5);
+    push(&myStack, 7);
+    push(&myStack, 9);
+
+    visualize(myStack);
+    display(myStack);
+    
+
+    return 0;
+}
+void initStack(Stack *S)
+{
+    *S = NULL;
+}
+bool push(Stack *S, int data)
+{
+    Stack temp;
+
+    temp = malloc(sizeof(Node));
+    if (!temp) return false;
+
+    temp->data = data;
+    temp->next = *S;
+    *S = temp;
+
+    return true;
+}
+bool pop(Stack *S)
+{
+    Stack temp;
+
+    if(isEmpty(*S)) return false;
+
+    temp = *S;
+    *S = temp->next;
+    free(temp);
+
+    return true;
+}
+int peek(Stack S)
+{
+    return S->data;
+}
+bool isEmpty(Stack S)
+{
+    if (S == NULL)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+void display(Stack S)
+{
+    if (isEmpty(S)) return;
+    bool top = true;
+
+    printf("Display:\n");
+    while (S != NULL) 
+    {
+        printf("\t%d", peek(S));
+        if (top) 
+        {
+            printf("\t<- Top");
+            top = false;
+        }
+        pop(&S);
+        printf("\n");
+
+    }
+}
+void visualize(Stack S)
+{
+    printf("\nVisualize:\nHead -> ");
+    if (isEmpty(S)) 
+    {
+        printf("NULL");
+        return;
+    }
+    for (; S != NULL; S = S->next) 
+    {
+        printf("%d", peek(S));
+        if (S->next != NULL) printf(" -> ");
+    }
+
+    printf("\n\n");
+}
