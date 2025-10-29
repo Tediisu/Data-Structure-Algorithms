@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+typedef unsigned char SET;
+
+SET setUnion(SET A, SET B);
+SET setIntersection(SET A, SET B);
+void display(SET x);
+
+int main(void) {
+    SET a = 'A';
+    SET b = 'B';
+
+    printf("Union:\n");
+    display(a);
+    display(b);
+    printf("----------------\n");
+    display(setUnion(a, b));
+    printf("\n\n");
+
+    printf("Intersection:\n");
+    display(a);
+    display(b);
+    printf("----------------\n");
+    display(setIntersection(a, b));
+    printf("\n\n");
+
+    return 0;
+}
+
+SET setUnion(SET A, SET B) {
+    return (A | B);
+}
+
+SET setIntersection(SET A, SET B) {
+    return (A & B);
+}
+
+void display(SET x) {
+    SET mask = 1 << (sizeof(SET) * 8 - 1);
+
+    while (mask != 0) {
+        printf("%d", (mask & x) ? 1 : 0);
+        mask >>= 1;
+    }
+
+    printf("\n");
+}
